@@ -349,6 +349,11 @@ window.onload = () => {
   fetchProduct();
 
   const addProductForm = document.getElementById("add-product-form");
+  const resetForm = document.getElementById("reset-form");
+  resetForm.onclick = () => {
+    addProductForm.reset();
+  };
+
   addProductForm.addEventListener("submit", function (e) {
     e.preventDefault();
     addProduct();
