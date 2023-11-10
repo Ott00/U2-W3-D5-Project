@@ -1,27 +1,28 @@
-const addLastProductToList = async () => {
+const addLastProductToList = async (lastElement) => {
   try {
-    const response = await fetch(
-      "https://striveschool-api.herokuapp.com/api/product",
-      {
-        method: "GET",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZWVkNjI1NGU4ODAwMTgzZjE4OGIiLCJpYXQiOjE2OTk2MDYyMzAsImV4cCI6MTcwMDgxNTgzMH0.NwU0Mk561DnGdLwOvdRa-UdBw5LHw9OEkngZKjh3j9M",
-          "Content-Type": "application/json"
-        }
-      }
-    );
-    console.log("RESPONSE AWAITED", response);
+    // FETCH RIMOSSA
+    // const response = await fetch(
+    //   "https://striveschool-api.herokuapp.com/api/product",
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization:
+    //         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZWVkNjI1NGU4ODAwMTgzZjE4OGIiLCJpYXQiOjE2OTk2MDYyMzAsImV4cCI6MTcwMDgxNTgzMH0.NwU0Mk561DnGdLwOvdRa-UdBw5LHw9OEkngZKjh3j9M",
+    //       "Content-Type": "application/json"
+    //     }
+    //   }
+    // );
+    // console.log("RESPONSE AWAITED", response);
 
-    if (!response.ok) {
-      throw new Error("General fetching error");
-    }
+    // if (!response.ok) {
+    //   throw new Error("General fetching error");
+    // }
 
-    const products = await response.json();
-    console.log(products);
-    const productList = document.getElementById("products-list");
+    // const products = await response.json();
+    // console.log(products);
+    // const productList = document.getElementById("products-list");
 
-    const lastElement = products.pop();
+    // const lastElement = products.pop();
     const list = document.getElementById("product-list-ul");
 
     const listElement = document.createElement("li");
@@ -159,8 +160,12 @@ const addProduct = async () => {
       productPrice.value = "";
 
       //Aggiungo il prodotto direttamente alla lista
-      addLastProductToList();
-      console.log("Prodotto aggiunto");
+
+      //il server risponde con cosa ha aggiunto e posso già manipolarlo
+      const lastProduct = await response.json();
+
+      addLastProductToList(lastProduct);
+      console.log("Prodotto aggiunto", lastProduct);
     }
   } catch (error) {
     console.log("Errore", error);
@@ -191,9 +196,15 @@ const deleteProduct = async (deleteBtn, productID) => {
   }
 };
 
-const editProduct = async (editBtn, productID) => {
-  editBtn.addEventListener("click", async function (e) {
+const editProduct = async (formNode, productID) => {
+  formNode.addEventListener("submit", async function (e) {
     e.preventDefault();
+
+    console.dir(formNode);
+
+    console.log(formNode[0].value);
+    console.log(formNode[4].value);
+
     try {
       const response = await fetch(
         "https://striveschool-api.herokuapp.com/api/product/" + productID,
@@ -267,6 +278,7 @@ const fetchProduct = async () => {
                         type="text"
                         class="form-control"
                         placeholder="Nome Prodotto"
+                        required
                         />
                     </div>
                     <div class="mb-2">
@@ -274,6 +286,7 @@ const fetchProduct = async () => {
                         type="text"
                         class="form-control"
                         placeholder="Descrizione Prodotto"
+                        required
                         />
                     </div>
                     <div class="mb-2">
@@ -281,6 +294,7 @@ const fetchProduct = async () => {
                         type="text"
                         class="form-control"
                         placeholder="Brand"
+                        required
                         />
                     </div>
                     <div class="mb-2">
@@ -288,6 +302,7 @@ const fetchProduct = async () => {
                         type="text"
                         class="form-control"
                         placeholder="Image Url"
+                        required
                         />
                     </div>
                     <div class="mb-2">
@@ -295,6 +310,7 @@ const fetchProduct = async () => {
                         type="number"
                         class="form-control"
                         placeholder="Price"
+                        required
                         />
                     </div>
                     <button type="submit" class="btn btn-dark w-25 align-self-center">
@@ -327,11 +343,15 @@ const fetchProduct = async () => {
 
       const productID = product._id;
 
+      // TASK DA FINIRE
+      const formNode = editForm.firstElementChild;
+      console.log(formNode);
+
       const editProductBtn = listElement.getElementsByClassName("btn")[0];
-      const editFormBtn = editForm.getElementsByClassName("btn")[0];
+      // const editFormBtn = editForm.getElementsByClassName("btn")[0];
       editProductBtn.addEventListener("click", () => {
         editForm.classList.toggle("d-none");
-        editProduct(editFormBtn, productID);
+        editProduct(formNode, productID);
       });
 
       const deleteProductBtn = listElement.getElementsByClassName("btn")[1];
