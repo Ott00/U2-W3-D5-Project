@@ -11,17 +11,16 @@ const fetchProduct = async () => {
         }
       }
     );
-    console.log("RESPONSE AWAITED", response);
+    // console.log("RESPONSE AWAITED", response);
 
     if (!response.ok) {
       throw new Error("General fetching error");
     }
 
     const products = await response.json();
-    console.log(products);
 
     products.forEach((product) => {
-      console.log(product);
+      //   console.log(product);
 
       const productsContainer = document.getElementById("product-cards");
 
