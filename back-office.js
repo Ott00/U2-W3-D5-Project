@@ -327,12 +327,12 @@ const fetchProduct = async () => {
 
       const productID = product._id;
 
-      const editProductBtn = listElement.getElementsByClassName("btn")[0];
-      const editFormBtn = editForm.getElementsByClassName("btn")[0];
-      editProductBtn.addEventListener("click", () => {
-        editForm.classList.toggle("d-none");
-        editProduct(editFormBtn, productID);
-      });
+      // const editProductBtn = listElement.getElementsByClassName("btn")[0];
+      // const editFormBtn = editForm.getElementsByClassName("btn")[0];
+      // editProductBtn.addEventListener("click", () => {
+      //   editForm.classList.toggle("d-none");
+      //   editProduct(editFormBtn, productID);
+      // });
 
       const deleteProductBtn = listElement.getElementsByClassName("btn")[1];
       deleteProductBtn.addEventListener("click", () => {
