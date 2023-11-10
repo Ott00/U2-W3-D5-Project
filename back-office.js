@@ -191,31 +191,31 @@ const deleteProduct = async (deleteBtn, productID) => {
   }
 };
 
-// const editProduct = async (editBtn, productID) => {
-//   editBtn.addEventListener("click", async function (e) {
-//     e.preventDefault();
-//     try {
-//       const response = await fetch(
-//         "https://striveschool-api.herokuapp.com/api/product/" + productID,
-//         {
-//           method: "PUT",
-//           body: JSON.stringify(thisProductObj),
-//           headers: {
-//             Authorization:
-//               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZWVkNjI1NGU4ODAwMTgzZjE4OGIiLCJpYXQiOjE2OTk2MDYyMzAsImV4cCI6MTcwMDgxNTgzMH0.NwU0Mk561DnGdLwOvdRa-UdBw5LHw9OEkngZKjh3j9M",
-//             "Content-Type": "application/json"
-//           }
-//         }
-//       );
-//       console.log("RESPONSE AWAITED", response);
-//       if (!response.ok) {
-//         throw new Error("General fetching error");
-//       }
-//     } catch (error) {
-//       console.log("Errore", error);
-//     }
-//   });
-// };
+const editProduct = async (editBtn, productID) => {
+  editBtn.addEventListener("click", async function (e) {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/product/" + productID,
+        {
+          method: "PUT",
+          body: JSON.stringify(thisProductObj),
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRkZWVkNjI1NGU4ODAwMTgzZjE4OGIiLCJpYXQiOjE2OTk2MDYyMzAsImV4cCI6MTcwMDgxNTgzMH0.NwU0Mk561DnGdLwOvdRa-UdBw5LHw9OEkngZKjh3j9M",
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      console.log("RESPONSE AWAITED", response);
+      if (!response.ok) {
+        throw new Error("General fetching error");
+      }
+    } catch (error) {
+      console.log("Errore", error);
+    }
+  });
+};
 
 const fetchProduct = async () => {
   try {
@@ -327,12 +327,12 @@ const fetchProduct = async () => {
 
       const productID = product._id;
 
-      // const editProductBtn = listElement.getElementsByClassName("btn")[0];
-      // const editFormBtn = editForm.getElementsByClassName("btn")[0];
-      // editProductBtn.addEventListener("click", () => {
-      //   editForm.classList.toggle("d-none");
-      //   editProduct(editFormBtn, productID);
-      // });
+      const editProductBtn = listElement.getElementsByClassName("btn")[0];
+      const editFormBtn = editForm.getElementsByClassName("btn")[0];
+      editProductBtn.addEventListener("click", () => {
+        editForm.classList.toggle("d-none");
+        editProduct(editFormBtn, productID);
+      });
 
       const deleteProductBtn = listElement.getElementsByClassName("btn")[1];
       deleteProductBtn.addEventListener("click", () => {
