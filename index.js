@@ -58,6 +58,10 @@ const fetchProduct = async () => {
 
       cardCol.appendChild(card);
       productsContainer.appendChild(cardCol);
+
+      cardBtn.addEventListener("click", function () {
+        window.location.assign("./pagina-dettaglio.html?appId=" + product._id);
+      });
     });
   } catch (error) {
     console.log("Errore", error);
