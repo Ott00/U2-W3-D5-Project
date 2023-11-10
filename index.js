@@ -48,7 +48,7 @@ const fetchProduct = async () => {
 
       const cardBtn = document.createElement("button");
       cardBtn.classList = "btn btn-dark";
-      cardBtn.innerText = "Specifiche";
+      cardBtn.innerText = "Scopri di più";
 
       cardBody.appendChild(cardTitle);
       cardBody.appendChild(cardPrice);
