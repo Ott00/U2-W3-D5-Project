@@ -22,7 +22,7 @@ const fetchProduct = async (productID) => {
     const productsContainer = document.getElementById("card");
 
     const cardCol = document.createElement("div");
-    cardCol.classList = "col-12 col-md-6 p-2";
+    cardCol.classList = "col-12 col-md-6";
 
     const cardImg = document.createElement("img");
     cardImg.classList =
