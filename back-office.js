@@ -105,10 +105,12 @@ const addLastProductToList = async (lastElement) => {
     list.appendChild(listElement);
     list.appendChild(editForm);
 
+    const formNode = editForm.firstElementChild;
+
     const editProductBtn = listElement.getElementsByClassName("btn")[0];
     editProductBtn.addEventListener("click", () => {
       editForm.classList.toggle("d-none");
-      editProduct(editProductBtn, lastElement._id);
+      editProduct(formNode, lastElement._id, editForm);
     });
 
     const deleteProductBtn = listElement.getElementsByClassName("btn")[1];
@@ -196,14 +198,18 @@ const deleteProduct = async (deleteBtn, productID) => {
   }
 };
 
-const editProduct = async (formNode, productID) => {
+const editProduct = async (formNode, productID, editForm) => {
   formNode.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    console.dir(formNode);
-
-    console.log(formNode[0].value);
-    console.log(formNode[4].value);
+    const thisProductObj = {
+      name: formNode[0].value,
+      description: formNode[1].value,
+      brand: formNode[2].value,
+      imageUrl: formNode[3].value,
+      price: formNode[4].value
+    };
+    // console.log(thisProductObj);
 
     try {
       const response = await fetch(
@@ -218,13 +224,27 @@ const editProduct = async (formNode, productID) => {
           }
         }
       );
-      console.log("RESPONSE AWAITED", response);
+      // console.log("RESPONSE AWAITED", response);
       if (!response.ok) {
         throw new Error("General fetching error");
       }
     } catch (error) {
       console.log("Errore", error);
     }
+
+    //Mofico a video l'elemento della lista con le info sul prodotto senza refreshare
+    const listItemFormSibling =
+      formNode.parentNode.closest("div").previousElementSibling;
+    // console.log(listItemFormSibling);
+
+    //Qui arrivo all'elemento <p></p> con all'interno il nome e prezzo del prodotto
+    const listItemFormSiblingContent =
+      listItemFormSibling.firstElementChild.firstElementChild;
+    // console.log(listItemFormSiblingContent);
+    listItemFormSiblingContent.innerText = `Prodotto: ${thisProductObj.name} Prezzo: ${thisProductObj.price}`;
+
+    //Nascondo il form della modifica a modifica effettuata
+    editForm.classList.toggle("d-none");
   });
 };
 
@@ -241,14 +261,14 @@ const fetchProduct = async () => {
         }
       }
     );
-    console.log("RESPONSE AWAITED", response);
+    // console.log("RESPONSE AWAITED", response);
 
     if (!response.ok) {
       throw new Error("General fetching error");
     }
 
     const products = await response.json();
-    console.log(products);
+    // console.log(products);
     const list = document.getElementById("product-list-ul");
 
     products.forEach((product) => {
@@ -343,15 +363,13 @@ const fetchProduct = async () => {
 
       const productID = product._id;
 
-      // TASK DA FINIRE
       const formNode = editForm.firstElementChild;
-      console.log(formNode);
+      // console.log(formNode);
 
       const editProductBtn = listElement.getElementsByClassName("btn")[0];
-      // const editFormBtn = editForm.getElementsByClassName("btn")[0];
       editProductBtn.addEventListener("click", () => {
         editForm.classList.toggle("d-none");
-        editProduct(formNode, productID);
+        editProduct(formNode, productID, editForm);
       });
 
       const deleteProductBtn = listElement.getElementsByClassName("btn")[1];
