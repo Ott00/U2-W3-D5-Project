@@ -57,16 +57,16 @@
       <div class="row d-flex justify-content-center mt-3">
         <div class="col-12 col-md-8">
           <div class="d-flex justify-content-between align-items-center">
-            <h3 class="mb-3">Aggiungi Prodotto</h3>
+            <h3 class="mb-0">Aggiungi Prodotto</h3>
             <button
-              class="btn border-0 mb-3"
+              class="btn border-0 px-0"
               data-bs-toggle="collapse"
               href="#add-product-form"
               role="button"
               aria-expanded="false"
               aria-controls="add-product-form"
             >
-              <i class="fa-solid fa-circle-plus"></i>
+              <i class="fs-3 fa-solid fa-circle-plus"></i>
             </button>
           </div>
           <form id="add-product-form" class="collapse">
@@ -115,7 +115,16 @@
                 required
               />
             </div>
-            <button id="add-product" type="submit" class="btn btn-primary">
+            <button
+              id="add-product"
+              type="submit"
+              class="btn btn-primary"
+              data-bs-toggle="collapse"
+              href="#add-product-form"
+              role="button"
+              aria-expanded="false"
+              aria-controls="add-product-form"
+            >
               Aggiungi
             </button>
             <button id="reset-form" type="submit" class="btn btn-secondary">
